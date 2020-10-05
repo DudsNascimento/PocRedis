@@ -1,0 +1,36 @@
+#Comandos basicos
+sudo docker ps -a
+sudo docker image ls
+sudo docker system prune
+sudo docker rmi Image Image
+sudo docker rm keycloak_server
+sudo docker exec -it keycloak_server bash
+sudo docker exec -it academico_server ash
+sudo docker network inspect bridge
+sudo docker run -d --name mongo_server \
+    -e MONGO_INITDB_ROOT_USERNAME=admin \
+    -e MONGO_INITDB_ROOT_PASSWORD=122333 \
+    -p 27017:27017 \
+    mongo
+
+#Criar servidor academico
+sudo docker build -t academico .
+sudo docker create -p 8080:8080 --name=academico_server academico:latest
+sudo docker start academico_server
+
+#Criar servidor keycloak
+sudo docker create -p 8180:8080 --name=keycloak_server jboss/keycloak
+sudo docker start keycloak_server
+sudo docker exec keycloak_server /opt/jboss/keycloak/bin/add-user-keycloak.sh -u admin -p 122333
+sudo docker restart keycloak_server
+
+#Criar servidor microsoft sql
+sudo docker create -e 'ACCEPT_EULA=Y' -e 'SA_PASSWORD=Q1w2e3r4t5*' -p 1433:1433 --name=msql_server mcr.microsoft.com/mssql/server:2017-CU8-ubuntu
+sudo docker start msql_server
+sudo docker cp criar-database.sql msql_server:/opt
+sudo docker exec -it msql_server /opt/mssql-tools/bin/sqlcmd -S localhost -U sa -P Q1w2e3r4t5* -i /opt/criar-database.sql
+
+#Escutar a rede
+ip link show
+ip a
+sudo tcpdump -A -i lo

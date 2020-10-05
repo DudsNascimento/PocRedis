@@ -1,0 +1,7 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<testsuite name="com.sample.AppTest" tests="1" skipped="0" failures="0" errors="0" timestamp="2020-10-02T14:00:17" hostname="tiago" time="0.586">
+  <properties/>
+  <testcase name="testObterTodos" classname="com.sample.AppTest" time="0.586"/>
+  <system-out><![CDATA[]]></system-out>
+  <system-err><![CDATA[]]></system-err>
+</testsuite>
